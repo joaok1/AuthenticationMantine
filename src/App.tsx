@@ -24,6 +24,8 @@ import { PostList, PostCreate, PostEdit, PostShow } from "./pages/posts";
 import { Login } from "./pages/login";
 import { loginAuth, clearDados, verifyUserExpired } from "./services/authetication/authentication"
 import Cookies from "js-cookie";
+import { LanchesList } from "./pages/lanches/list";
+import { UsuarioList } from "./pages/usuarios";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 const TOKEN_COOKIE_KEY : string = 'token';
@@ -97,6 +99,20 @@ const App: React.FC = () => {
                                 create: "/posts/create",
                                 edit: "/posts/edit/:id",
                             },
+                            {
+                                name: "Lanches",
+                                list: "/lanches",
+                                show: "/posts/show/:id",
+                                create: "/posts/create",
+                                edit: "/posts/edit/:id",
+                            },
+                            {
+                                name: "Usuarios",
+                                list: "/usuarios",
+                                show: "/posts/show/:id",
+                                create: "/posts/create",
+                                edit: "/posts/edit/:id",
+                            },
                         ]}
                         notificationProvider={useNotificationProvider}
                         options={{
@@ -124,7 +140,7 @@ const App: React.FC = () => {
                                         <NavigateToResource resource="posts" />
                                     }
                                 />
-
+                                //Parte do posts
                                 <Route path="/posts">
                                     <Route index element={<PostList />} />
                                     <Route
@@ -140,8 +156,22 @@ const App: React.FC = () => {
                                         element={<PostShow />}
                                     />
                                 </Route>
+                                <Route
+                                    index
+                                    element={
+                                        <NavigateToResource resource="posts" />
+                                    }
+                                />
+                                //Parte dos lanches
+                                <Route path="/lanches">
+                                    <Route index element={<LanchesList />} />
+                                </Route >
+                                //Parte dos Usuarios
+                                <Route path="/usuarios">
+                                    <Route index element={<UsuarioList />} />
+                                </Route >
                             </Route>
-
+                            //Dados do login
                             <Route
                                 element={
                                     <Authenticated fallback={<Outlet />}>
