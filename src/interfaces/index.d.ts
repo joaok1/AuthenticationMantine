@@ -10,3 +10,17 @@ export interface IPost {
     status: "published" | "draft" | "rejected";
     category: { id: number };
 }
+
+export interface IPessoa {
+    id: any;
+    nome: string;
+    sobrenome: string;
+    cpf:string;
+    contato:string;
+    usuario:{
+        role: {
+            name : string
+        }
+    };
+}
+

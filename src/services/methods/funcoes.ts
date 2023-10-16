@@ -23,6 +23,17 @@ import Cookies from "js-cookie";
     );
     return usuario;
   }
+  export const listAllFuncionanrio = async (page : number) => {
+      const data = {
+        method: "get",
+        url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}`,
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      };
+      const dados = await axios(data)
+      return dados;
+  }
   // async getListagemProdutos(page) {
   //   const data = {
   //     method: "get",
@@ -33,14 +44,3 @@ import Cookies from "js-cookie";
   //   };
   //   return axios(data);
   // },
-  // async listAllFuncionarioPage(page) {
-  //   const data = {
-  //     method: "get",
-  //     url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}`,
-  //     headers: {
-  //       Authorization: `Bearer ${Cookies.get("token")}`,
-  //     },
-  //   };
-  //   return axios(data);
-  // }
-export default actions;

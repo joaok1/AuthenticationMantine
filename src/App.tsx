@@ -25,9 +25,9 @@ import { Login } from "./pages/login";
 import { loginAuth, clearDados, verifyUserExpired } from "./services/authetication/authentication"
 import Cookies from "js-cookie";
 import { LanchesList } from "./pages/lanches/list";
-import { UsuarioList } from "./pages/usuarios";
+import { PessoaList } from "./pages/pessoa/list";
 
-const API_URL = "https://api.fake-rest.refine.dev";
+const API_URL = "http://localhost:1080/api";
 const TOKEN_COOKIE_KEY : string = 'token';
 const USER_COOKIE_KEY: string  = 'user';
 const DADOS_USUARIO : string = 'dados_usuario';
@@ -40,7 +40,6 @@ const App: React.FC = () => {
                 senha: password
             }
             let data = await loginAuth(user);
-            console.log(data)
             if (data) {
                 localStorage.setItem("username", username);
                 return {
@@ -80,7 +79,9 @@ const App: React.FC = () => {
                 };
             }
           },
-        getPermissions: async () => ["admin"],
+        getPermissions: async () => {
+            return "Bearer" + Cookies.get(TOKEN_COOKIE_KEY)
+        }
     };
 
     return (
@@ -90,7 +91,7 @@ const App: React.FC = () => {
                     <Refine
                         dataProvider={dataProvider(API_URL)}
                         authProvider={authProvider}
-                        routerProvider={routerProvider}
+                        // routerProvider={routerProvider}
                         resources={[
                             {
                                 name: "posts",
@@ -107,8 +108,8 @@ const App: React.FC = () => {
                                 edit: "/posts/edit/:id",
                             },
                             {
-                                name: "Usuarios",
-                                list: "/usuarios",
+                                name: "pessoa",
+                                list: "/pessoa/",
                                 show: "/posts/show/:id",
                                 create: "/posts/create",
                                 edit: "/posts/edit/:id",
@@ -166,10 +167,11 @@ const App: React.FC = () => {
                                 <Route path="/lanches">
                                     <Route index element={<LanchesList />} />
                                 </Route >
-                                //Parte dos Usuarios
-                                <Route path="/usuarios">
-                                    <Route index element={<UsuarioList />} />
+                                //Parte dos Pessoas
+                                <Route path="/pessoa/">
+                                    <Route index element={<PessoaList />} />
                                 </Route >
+
                             </Route>
                             //Dados do login
                             <Route
