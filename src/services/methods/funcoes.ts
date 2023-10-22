@@ -23,7 +23,20 @@ import Cookies from "js-cookie";
     );
     return usuario;
   }
-  export const listAllFuncionanrio = async (page : number) => {
+  export const listAllFuncionanrio = async (page : number, ordernacao:any) => {
+      if (ordernacao) {
+        console.log(ordernacao, 'ola')
+        const data = {
+          method: "get",
+          url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}&sort=${ordernacao.field},${ordernacao.order === 'descend' ? 'DESC' : 'ASC'}`,
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+          },
+        };
+        const dados = await axios(data)
+        return dados;
+      }
+      console.log('caiu aqui')
       const data = {
         method: "get",
         url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}`,

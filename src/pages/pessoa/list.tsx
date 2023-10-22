@@ -1,16 +1,31 @@
 import { IResourceComponentsProps } from "@refinedev/core";
-
+import {
+    Row,
+    Col,
+    Layout as AntdLayout,
+    Card,
+    Typography,
+    Form,
+    Input,
+    Button,
+    Checkbox,
+} from "antd";
 import { TableList } from "../../components/table";
 import { listAllFuncionanrio } from "../../services/methods/funcoes";
 import { useEffect, useState } from "react";
-
-
+import "./styles.css"
+import React from "react";
+import { Link } from "react-router-dom";
 
 const columns = [
     {
         label: "Nome",
         dataIndex : "nome",
-        order : ""
+        defaultSortOrder: 'ASC',
+        sorter: {
+            compare: (a: any, b: any) => a.nome - b.nome,
+            multiple: 3,
+          },
     },
     {
         label: "Sobrenome",
@@ -25,7 +40,11 @@ const columns = [
     {
         label: "Cpf",
         dataIndex : "cpf",
-        order : ""
+        defaultSortOrder: 'ASC',
+        sorter: {
+            compare: (a: any, b: any) => a.cpf - b.cpf,
+            multiple: 3,
+          },
     },
     {
         label: "Contato",
@@ -40,25 +59,36 @@ const columns = [
 ]
 export const PessoaList: React.FC<IResourceComponentsProps> = () => {
     const [currentPage, setCurrentPage] = useState(0);
-    const handlePageChange = (page: number) => {
+    const [order, setOrder] = useState()
+    const handlePageChange = (page: number,sorter: any) => {
         setCurrentPage(page);
+        setOrder(sorter)
     };
-    console.log(currentPage);
+    console.log(order);
     const [data, setData] = useState();
     useEffect(() => {
         async function fetchData() {
             try {
-                const dados = await listAllFuncionanrio(currentPage);
+                console.log(order)
+                const dados = await listAllFuncionanrio(currentPage,order);
                 setData(dados.data);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchData();
-      }, [currentPage]);
+      }, [currentPage, order]);
+
     return (
         <div>
-            <TableList column={columns} data={data} onPageChange={handlePageChange} />
+            <div className="buttonCreatePeaple">
+                    <Link to="/pessoa/create">
+                        <Button type="primary">
+                            Criar usuário
+                        </Button>
+                    </Link>
+            </div>
+            <TableList column={columns} onChange={handlePageChange} dataSource={data}  />
         </div>
     )
 };
