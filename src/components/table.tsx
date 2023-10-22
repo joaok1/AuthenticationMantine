@@ -9,17 +9,7 @@ export function TableList({ dataSource, onChange, column }: { dataSource: any; o
 
     const change = (pagination: any, filters: any, sorter: any) => {
         setCurrentPage(pagination.current);
-        if (sorter.column) {
-            onChange(pagination.current - 1, sorter);
-        } else {
-            onChange(pagination.current - 1,"");
-        }
-
-        console.log(sorter)
-        if (sorter && sorter.columnKey) {
-            const { columnKey, order } = sorter;
-            console.log(`Coluna: ${sorter}, Ordem: ${order}`);
-        }
+        sorter.column ? onChange(pagination.current - 1, sorter) : onChange(pagination.current - 1,"");
     };
 
     const date = {
@@ -29,6 +19,7 @@ export function TableList({ dataSource, onChange, column }: { dataSource: any; o
             total: dataSource?.totalElements,
         },
     };
+
     tableProps.dataSource = dataSource?.content;
     tableProps.loading = false;
     tableProps.pagination = date.pagination;
@@ -52,7 +43,6 @@ export function TableList({ dataSource, onChange, column }: { dataSource: any; o
                         }}
                     />
                 ))}
-            </Table>
             <Table.Column<IPost>
                 title="Ações"
                 dataIndex="index"
@@ -77,8 +67,9 @@ export function TableList({ dataSource, onChange, column }: { dataSource: any; o
                         </Space>
                     )
                 }
-                }
+            }
             />
+            </Table>
         </List>
     );
 }

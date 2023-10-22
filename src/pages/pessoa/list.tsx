@@ -21,7 +21,6 @@ const columns = [
     {
         label: "Nome",
         dataIndex : "nome",
-        defaultSortOrder: 'ASC',
         sorter: {
             compare: (a: any, b: any) => a.nome - b.nome,
             multiple: 3,
@@ -35,7 +34,11 @@ const columns = [
     {
         label: "Sexo",
         dataIndex : "sexo",
-        order : ""
+        order : "",
+        sorter: {
+            compare: (a: any, b: any) => a.sexo - b.sexo,
+            multiple: 3,
+          },
     },
     {
         label: "Cpf",
@@ -64,12 +67,10 @@ export const PessoaList: React.FC<IResourceComponentsProps> = () => {
         setCurrentPage(page);
         setOrder(sorter)
     };
-    console.log(order);
     const [data, setData] = useState();
     useEffect(() => {
         async function fetchData() {
             try {
-                console.log(order)
                 const dados = await listAllFuncionanrio(currentPage,order);
                 setData(dados.data);
             } catch (error) {

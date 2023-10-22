@@ -80,7 +80,6 @@ const DADOS_USUARIO : string = 'dados_usuario';
         },
         check: async () => {
             await verifyUserExpired();
-            console.log('aopa')
             if (Cookies.get(USER_COOKIE_KEY)) {
                 return {
                 authenticated: true,
@@ -133,7 +132,7 @@ const DADOS_USUARIO : string = 'dados_usuario';
                                     {
                                         name: "lanches",
                                         list: "/lanches",
-                                        show: "/posts/show/:id",
+                                        show: "/posts/show/",
                                         create: "/posts/create",
                                         edit: "/posts/edit/:id",
                                         meta: {
@@ -145,10 +144,8 @@ const DADOS_USUARIO : string = 'dados_usuario';
                                     {
                                         name: "pessoa",
                                         list: "/pessoa/",
-                                        show: "/posts/show/:id",
-                                        create: "/pessoa/create",
-                                        edit: "/posts/edit/:id",
                                         meta: {
+                                            delete: "/pessoa/deleteById/:id",
                                             canDelete: false,
                                             label: 'Pessoas',
                                             icon: < Group/>
