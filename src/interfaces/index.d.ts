@@ -11,16 +11,5 @@ export interface IPost {
     category: { id: number };
 }
 
-export interface IPessoa {
-    id: any;
-    nome: string;
-    sobrenome: string;
-    cpf:string;
-    contato:string;
-    usuario:{
-        role: {
-            name : string
-        }
-    };
-}
+
 

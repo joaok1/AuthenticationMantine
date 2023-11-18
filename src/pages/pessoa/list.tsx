@@ -9,14 +9,23 @@ import {
     Input,
     Button,
     Checkbox,
+    Flex,
+    Tooltip,
 } from "antd";
 import { TableList } from "../../components/table";
-import { listAllFuncionanrio } from "../../services/methods/funcoes";
 import { useEffect, useState } from "react";
-import "./styles.css"
+import style from "./styles.module.css"
 import React from "react";
 import { Link } from "react-router-dom";
+import { People } from "@mui/icons-material";
+import { Box } from "@mui/material";
+import { listAllFuncionario } from "src/stores/pessoaStore";
 
+const columnActions = [
+    { label: 'Editar', action: 'edit' },
+    { label: 'Excluir', action: 'delete' },
+    { label: 'Visualizar', action: 'visualizar' },
+];
 const columns = [
     {
         label: "Nome",
@@ -34,7 +43,6 @@ const columns = [
     {
         label: "Sexo",
         dataIndex : "sexo",
-        order : "",
         sorter: {
             compare: (a: any, b: any) => a.sexo - b.sexo,
             multiple: 3,
@@ -43,7 +51,6 @@ const columns = [
     {
         label: "Cpf",
         dataIndex : "cpf",
-        defaultSortOrder: 'ASC',
         sorter: {
             compare: (a: any, b: any) => a.cpf - b.cpf,
             multiple: 3,
@@ -62,16 +69,17 @@ const columns = [
 ]
 export const PessoaList: React.FC<IResourceComponentsProps> = () => {
     const [currentPage, setCurrentPage] = useState(0);
+    const [deleteDados, setDeleteDados] = useState(null);
     const [order, setOrder] = useState()
     const handlePageChange = (page: number,sorter: any) => {
         setCurrentPage(page);
-        setOrder(sorter)
+        setOrder(sorter);
     };
     const [data, setData] = useState();
     useEffect(() => {
         async function fetchData() {
             try {
-                const dados = await listAllFuncionanrio(currentPage,order);
+                const dados = await listAllFuncionario(currentPage,order);
                 setData(dados.data);
             } catch (error) {
                 console.log(error);
@@ -79,17 +87,24 @@ export const PessoaList: React.FC<IResourceComponentsProps> = () => {
         }
         fetchData();
       }, [currentPage, order]);
-
+      const apagar = (render: any) => {
+        console.log(render)
+      }
     return (
-        <div>
-            <div className="buttonCreatePeaple">
+        <Box>
+            <Flex justify="end">
                     <Link to="/pessoa/create">
-                        <Button type="primary">
-                            Criar usuário
-                        </Button>
+                        <Flex align="center">
+                            <Tooltip title="Cadastrar usuário">
+                                <Button  type="primary" ghost style={{display:"flex", alignItems:"center"}}>
+                                    <People className="icon" />
+                                    Cadastrar usuário
+                                </Button>
+                            </Tooltip>
+                        </Flex>
                     </Link>
-            </div>
-            <TableList column={columns} onChange={handlePageChange} dataSource={data}  />
-        </div>
+            </Flex>
+            <TableList column={columns} onChange={handlePageChange} dataSource={data} actions={columnActions}  />
+        </Box>
     )
 };
