@@ -4,6 +4,7 @@ import {
   useNotificationProvider,
   ThemedLayoutV2,
   ErrorComponent,
+  ThemedTitleV2,
 } from '@refinedev/antd';
 import dataProvider from '@refinedev/simple-rest';
 import {
@@ -29,11 +30,9 @@ import { PessoaList } from './pages/pessoa/list';
 import { PessoaCreate } from './pages/pessoa/create';
 import React, { useState } from 'react';
 import { PessoaEdit } from './pages/pessoa/edit';
-
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import { RefineKbarProvider } from '@refinedev/kbar';
-import Titulo from './components/Titulo';
 import ILogin from './interfaces/login';
-
 const API_URL = 'http://localhost:1080/api';
 const TOKEN_COOKIE_KEY: string = 'token';
 const USER_COOKIE_KEY: string = 'user';
@@ -159,7 +158,15 @@ const App: React.FC = () => {
                 <Route
                   element={
                     <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                      <ThemedLayoutV2 Title={() => <Titulo />}>
+                      <ThemedLayoutV2
+                        Title={({ collapsed }) => (
+                          <ThemedTitleV2
+                            icon={<FastfoodIcon />}
+                            collapsed={collapsed}
+                            text="X-Lanches"
+                          />
+                        )}
+                      >
                         <Outlet />
                       </ThemedLayoutV2>
                     </Authenticated>

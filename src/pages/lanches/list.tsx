@@ -1,7 +1,5 @@
-import { IResourceComponentsProps } from "@refinedev/core"
+import { IResourceComponentsProps } from '@refinedev/core';
 
 export const LanchesList: React.FC<IResourceComponentsProps> = () => {
-    return (
-        <div>ola</div>
-    )
-}
+  return <div>ola</div>;
+};
