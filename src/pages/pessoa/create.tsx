@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import {
   Alert,
@@ -78,7 +79,7 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
     ],
   };
 
-  const onFinish = (data: IPessoa) => {
+  const onFinish = (data: any) => {
     pessoa.bairro = data.bairro;
     pessoa.cep = data.cep;
     pessoa.cpf = data.cpf;
@@ -93,7 +94,7 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
     pessoa.sexo = data.sexo;
     pessoa.sobrenome = data.sobrenome;
     pessoa.telefone = data.telefone;
-    pessoa.usuario.senha = data.usuario.senha;
+    pessoa.usuario.senha = data.senha;
 
     cadastroFuncionario(pessoa).then(() => {
       history('/pessoa');

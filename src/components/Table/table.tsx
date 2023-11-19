@@ -18,14 +18,12 @@ export function TableList({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { tableProps } = useTable<IPost>();
-  console.log(actions);
   const change = (pagination: any, filters: any, sorter: any) => {
     setCurrentPage(pagination.current);
     sorter.column
       ? onChange(pagination.current - 1, sorter)
       : onChange(pagination.current - 1, '');
   };
-
   const date = {
     pagination: {
       pageSize: 10,

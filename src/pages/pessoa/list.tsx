@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IResourceComponentsProps } from '@refinedev/core';
 import { Button, Flex, Tooltip } from 'antd';
 import { TableList } from '../../components/Table/table';
@@ -19,6 +20,7 @@ const columns = [
     dataIndex: 'nome',
     sorter: {
       multiple: 3,
+      compare: (a: any, b: any) => a.nome - b.nome,
     },
   },
   {
@@ -31,6 +33,7 @@ const columns = [
     dataIndex: 'sexo',
     sorter: {
       multiple: 3,
+      compare: (a: any, b: any) => a.sexo - b.sexo,
     },
   },
   {
@@ -38,6 +41,7 @@ const columns = [
     dataIndex: 'cpf',
     sorter: {
       multiple: 3,
+      compare: (a: any, b: any) => a.cpf - b.cpf,
     },
   },
   {
@@ -49,6 +53,10 @@ const columns = [
     label: 'Perfil',
     dataIndex: 'usuario.role.name',
     order: '',
+    sorter: {
+      multiple: 3,
+      compare: (a: any, b: any) => a.usuario.role.name - b.usuario.role.name,
+    },
   },
 ];
 export const PessoaList: React.FC<IResourceComponentsProps> = () => {

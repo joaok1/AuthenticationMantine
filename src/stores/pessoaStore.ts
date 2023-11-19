@@ -29,9 +29,8 @@ export const listAllFuncionario = async (page: number, ordernacao: any) => {
     ordernacao.order = ordernacao.order === 'descend' ? 'DESC' : 'ASC';
     const data = {
       method: 'get',
-      url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}&sort=${
-        (ordernacao.field, ordernacao.order)
-      }`,
+      url: `http://localhost:1080/api/pessoa/findByAllPessoa?size=10&page=${page}
+      &sort=${ordernacao.field},${ordernacao.order}`,
       headers: {
         Authorization: `Bearer ${Cookies.get('token')}`,
       },

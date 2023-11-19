@@ -25,7 +25,6 @@ export interface ILoginForm {
 
 export const Login: React.FC = () => {
   const [form] = Form.useForm<ILoginForm>();
-
   const { mutate: login } = useLogin<ILoginForm>();
 
   const CardTitle = (
@@ -83,7 +82,7 @@ export const Login: React.FC = () => {
                         const formattedValue = formatarCPFCNPJ(e.target.value);
                         form.setFieldsValue({ username: formattedValue });
                       }}
-                      placeholder="Digite seu CPF"
+                      placeholder={'Digite a senha'}
                     />
                   </Form.Item>
                   <Form.Item

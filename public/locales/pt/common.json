@@ -1,1 +1,8 @@
-{}
+{
+  "pages": {
+    "lanches": {},
+    "login": {
+      "placeHolderInputCpf": "Digite seu CPF"
+    }
+  }
+}
