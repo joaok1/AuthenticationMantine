@@ -55,8 +55,10 @@ export const dateAsString = (date: Date) => {
 };
 
 export const validarCPFCNPJ = (cpfcnpj: string) => {
+  console.log(cpfcnpj);
   if (cpfcnpj.length > 0) {
     if (cpfcnpj.length === 11) {
+      console.log('passou');
       return !cpf.isValid(cpfcnpj, false);
     } else {
       return !cnpj.isValid(cpfcnpj, false);

@@ -8,11 +8,13 @@ import { Delete, Preview, Edit } from '@mui/icons-material';
 export function TableList({
   dataSource,
   onChange,
+  onDelete,
   column,
   actions,
 }: {
   dataSource: any;
   actions: any;
+  onDelete: (data: number) => void;
   onChange: (page: number, sorter: any) => void;
   column: any;
 }) {
@@ -36,8 +38,8 @@ export function TableList({
   tableProps.loading = false;
   tableProps.pagination = date.pagination;
 
-  const deletedate = (data: any) => {
-    return console.log('value', data);
+  const deletedate = (data: number) => {
+    onDelete(data);
   };
 
   return (

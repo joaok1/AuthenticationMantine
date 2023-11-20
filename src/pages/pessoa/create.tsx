@@ -19,6 +19,8 @@ import { cadastroFuncionario } from '../../stores/pessoaStore';
 import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import IPessoa from 'src/interfaces/pessoa';
+import { removeformatarCPFCNPJ } from 'src/utils/FormatterUtils';
+import { cpf } from 'cpf-cnpj-validator';
 
 const { Option } = Select;
 
@@ -81,8 +83,8 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
 
   const onFinish = (data: any) => {
     pessoa.bairro = data.bairro;
-    pessoa.cep = data.cep;
-    pessoa.cpf = data.cpf;
+    pessoa.cep = removeformatarCPFCNPJ(data.cep);
+    pessoa.cpf = removeformatarCPFCNPJ(data.cpf);
     pessoa.data_nascimento = data.data_nascimento;
     pessoa.email = data.email;
     pessoa.estado = data.estado;
@@ -214,6 +216,12 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
                         required: true,
                         message: 'Digite seu CPF!',
                         whitespace: true,
+                      },
+                      {
+                        validator: (_, value) =>
+                          cpf.isValid(value)
+                            ? Promise.resolve()
+                            : Promise.reject(new Error('CPF inválido')),
                       },
                     ]}
                   >
@@ -421,9 +429,10 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
           </Row>
         </Card>
         <Form.Item {...tailFormItemLayout}>
-          <Flex justify="space-between">
+          <Flex justify="space-between" style={{ marginTop: '20px' }}>
             <Box>
               <Button
+                shape="round"
                 type="primary"
                 danger
                 onClick={() => {
@@ -434,7 +443,7 @@ export const PessoaCreate: React.FC<IResourceComponentsProps> = () => {
               </Button>
             </Box>
             <Box>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" shape="round" htmlType="submit">
                 Registrar
               </Button>
             </Box>

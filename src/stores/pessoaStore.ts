@@ -65,3 +65,9 @@ export const dadosPessoa = async () => {
   );
   return await usuario;
 };
+export const deletePessoaAndUser = async (data: number) => {
+  const usuario = axios.delete(
+    `http://localhost:1080/api/usuarios/deleteById/${data}`
+  );
+  return await usuario;
+};
